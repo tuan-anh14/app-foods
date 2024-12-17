@@ -90,7 +90,7 @@ const SignUpPage = () => {
           }}
         >
           <Text style={{ color: "black" }}>Đã có tài khoản?</Text>
-          <Link href={"/(auth)/signup"}>
+          <Link href={"/(auth)/login"}>
             <Text
               style={{
                 color: APP_COLOR.ORANGE,
@@ -102,7 +102,9 @@ const SignUpPage = () => {
           </Link>
         </View>
 
-        <SocialButton />
+        <SocialButton
+          title="Đăng ký với"
+        />
       </View>
     </SafeAreaView>
   );
