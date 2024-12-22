@@ -26,6 +26,10 @@ const VerifyPage = () => {
 
     const { email, isLogin } = useLocalSearchParams();
 
+    useEffect(() => {
+        handleResendCode();
+    }, []);
+
     const verifyCode = async () => {
         //call api
         Keyboard.dismiss();
