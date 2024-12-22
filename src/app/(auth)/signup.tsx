@@ -1,169 +1,136 @@
-import React, { useEffect } from "react";
 import ShareButton from "@/components/button/share.button";
 import SocialButton from "@/components/button/social.button";
 import ShareInput from "@/components/input/share.input";
-import { LoadingModal } from "@/modals";
+import { registerAPI } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import Toast from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
-import authenticationAPI from "@/apis/authApi";
-import TextComponent from "@/components/TextComponent";
-import { appColors } from "@/constants/appColors";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 20,
     gap: 10,
   },
+  inputGroup: {
+    padding: 5,
+    gap: 10,
+  },
+  text: {
+    fontSize: 18,
+  },
+  input: {
+    borderColor: "#d0d0d0",
+    borderWidth: 1,
+    paddingHorizontal: 7,
+    paddingVertical: 10,
+    borderRadius: 5,
+  },
 });
-
-const initValue = {
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
-
 const SignUpPage = () => {
-  const [values, setValues] = useState(initValue);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<any>();
-  const [isDisable, setIsDisable] = useState(true);
 
-  useEffect(() => {
-    if (
-      !errorMessage ||
-      (errorMessage &&
-        (errorMessage.email ||
-          errorMessage.password ||
-          errorMessage.confirmPassword)) ||
-      !values.email ||
-      !values.password ||
-      !values.confirmPassword
-    ) {
-      setIsDisable(true);
-    } else {
-      setIsDisable(false);
-    }
-  }, [errorMessage, values]);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const handleChangeValue = (key: string, value: string) => {
-    const data: any = { ...values };
+  const handleSignUp = async () => {
 
-    data[`${key}`] = value;
+    try {
 
-    setValues(data);
-  };
+      const res = await registerAPI(email, password, name)
+      if (res.data) {
+        router.replace({
+          pathname: "/(auth)/verify",
+          params: { email: email }
 
-  const handleRegister = async () => {
-
-    const { email, password, confirmPassword } = values
-
-    if (email && password && confirmPassword) {
-
-      setIsLoading(true);
-
-
-      try {
-        const res = await authenticationAPI.HandleAuthentication("/register", values, 'post');
-
-        console.log("Response:", res);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error:", error);
-        setIsLoading(false);
+        }
+        )
+      } else {
+        const m = Array.isArray(res.message) ? res.message[0] : res.message;
+        Toast.show(m, {
+          duration: Toast.durations.LONG,
+          textColor: 'white',
+          backgroundColor: APP_COLOR.ORANGE,
+          opacity: 1
+        });
       }
-    } else {
-      setErrorMessage('Vui lòng nhập đầy đủ thông tin')
+    } catch (error) {
+      console.log(">>check error:", error)
     }
-  };
+  }
 
   return (
-    <>
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <Text style={{ fontSize: 25, fontWeight: "600", marginVertical: 30 }}>
-            Đăng ký tài khoản
-          </Text>
-
-          <ShareInput
-            title="Họ tên"
-            value={values.username}
-            setValue={(value) => handleChangeValue("username", value)}
-          />
-          <ShareInput
-            title="Email"
-            keyboardType="email-address"
-            value={values.email}
-            setValue={(value) => handleChangeValue("email", value)}
-          />
-          <ShareInput
-            title="Mật khẩu"
-            secureTextEntry={true}
-            value={values.password}
-            setValue={(value) => handleChangeValue("password", value)}
-          />
-          <ShareInput
-            title="Xác nhận mật khẩu"
-            secureTextEntry={true}
-            value={values.confirmPassword}
-            setValue={(value) => handleChangeValue("confirmPassword", value)}
-          />
-          <Text>
-            {
-              errorMessage && <TextComponent text={errorMessage} color={appColors.danger} />
-            }
-          </Text>
-
-          <View style={{ marginVertical: 2 }}></View>
-          <ShareButton
-            title="Đăng Ký"
-            onPress={handleRegister}
-            textStyle={{
-              color: "#fff",
-              paddingVertical: 5,
-              textTransform: "uppercase",
-            }}
-            buttonStyle={{
-              justifyContent: "center",
-              borderRadius: 30,
-              marginHorizontal: 50,
-              paddingVertical: 10,
-              backgroundColor: APP_COLOR.ORANGE,
-            }}
-            pressStyle={{ alignSelf: "stretch" }}
-          />
-
-          <View
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View>
+          <Text
             style={{
-              marginVertical: 10,
-              flexDirection: "row",
-              gap: 10,
-              justifyContent: "center",
+              fontSize: 25,
+              fontWeight: "600",
+              marginVertical: 30,
             }}
           >
-            <Text style={{ color: "black" }}>Đã có tài khoản?</Text>
-            <Link href={"/(auth)/login"}>
-              <Text
-                style={{
-                  color: APP_COLOR.ORANGE,
-                  textDecorationLine: "underline",
-                }}
-              >
-                Đăng nhập.
-              </Text>
-            </Link>
-          </View>
-
-          <SocialButton title="Đăng ký với" />
+            Đăng ký tài khoản
+          </Text>
         </View>
-      </SafeAreaView>
-      <LoadingModal visible={isLoading} />
-    </>
+        <ShareInput title="Họ tên" value={name} setValue={setName} />
+        <ShareInput
+          title="Email"
+          keyboardType="email-address"
+          value={email}
+          setValue={setEmail}
+        />
+        <ShareInput
+          title="Password"
+          secureTextEntry={true}
+          value={password}
+          setValue={setPassword}
+        />
+        <View style={{ marginVertical: 10 }}></View>
+        <ShareButton
+          title="Đăng Ký"
+          onPress={handleSignUp}
+          textStyle={{
+            color: "#fff",
+            paddingVertical: 5,
+            textTransform: "uppercase",
+          }}
+          buttonStyle={{
+            justifyContent: "center",
+            borderRadius: 30,
+            marginHorizontal: 50,
+            paddingVertical: 10,
+            backgroundColor: APP_COLOR.ORANGE,
+          }}
+          pressStyle={{ alignSelf: "stretch" }}
+        />
+        <View
+          style={{
+            marginVertical: 15,
+            flexDirection: "row",
+            gap: 10,
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ color: "black" }}>Đã có tài khoản?</Text>
+          <Link href={"/(auth)/login"}>
+            <Text
+              style={{
+                color: APP_COLOR.ORANGE,
+                textDecorationLine: "underline",
+              }}
+            >
+              Đăng nhập.
+            </Text>
+          </Link>
+        </View>
+        <SocialButton
+          title="Đăng ký với"
+        />
+      </View>
+    </SafeAreaView>
   );
 };
-
 export default SignUpPage;

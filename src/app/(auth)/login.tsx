@@ -1,11 +1,13 @@
-import authenticationAPI from "@/apis/authApi";
+
 import ShareButton from "@/components/button/share.button";
 import SocialButton from "@/components/button/social.button";
 import ShareInput from "@/components/input/share.input";
+import { loginAPI } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
-import { Link } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Toast from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
@@ -32,13 +34,34 @@ const styles = StyleSheet.create({
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
     try {
-      const res = await authenticationAPI.HandleAuthentication('/hello');
-      console.log(res)
+      setLoading(true)
+      const res = await loginAPI(email, password);
+      setLoading(false)
+      if (res.data) {
+        router.replace("/(tabs)")
+      } else {
+        const m = Array.isArray(res.message) ? res.message[0] : res.message;
+
+        Toast.show(m, {
+          duration: Toast.durations.LONG,
+          textColor: 'white',
+          backgroundColor: APP_COLOR.ORANGE,
+          opacity: 1
+        });
+
+        if (res.statusCode === 400) {
+          router.replace({
+            pathname: "/(auth)/verify",
+            params: { email: email, isLogin: 1 }
+          })
+        }
+      }
     } catch (error) {
-      console.log(error);
+      console.log("check error:", error)
     }
   }
 
@@ -70,6 +93,7 @@ const LoginPage = () => {
         />
         <View style={{ marginVertical: 10 }}></View>
         <ShareButton
+          loading={loading}
           title="Đăng Nhập"
           onPress={handleLogin}
           textStyle={{

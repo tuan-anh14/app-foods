@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
 });
 
 const WelcomePage = () => {
-  if (true) {
-    return <Redirect href={"/(auth)/login"} />;
-  }
+  // if (true) {
+  //   return <Redirect href={"/(tabs)/home"} />;
+  // }
 
   return (
     <ImageBackground style={{ flex: 1 }} source={bg}>
