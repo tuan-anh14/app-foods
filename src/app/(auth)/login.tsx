@@ -123,6 +123,18 @@ const LoginPage = () => {
               pressStyle={{ alignSelf: "stretch" }}
             />
 
+            <View style={{ marginVertical: 15, alignItems: "center" }}>
+              <Text
+                style={{
+                  color: APP_COLOR.ORANGE,
+                  textDecorationLine: "underline",
+                }}
+                onPress={() => router.push("/(auth)/forgot-password")}
+              >
+                Quên mật khẩu?
+              </Text>
+            </View>
+
             <View
               style={{
                 marginVertical: 15,

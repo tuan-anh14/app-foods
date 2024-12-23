@@ -11,7 +11,7 @@ export const verifyCodeAPI = (email: string, code: string) => {
 }
 
 export const resendCodeAPI = (email: string, code: string) => {
-    const url = `/auth/verification`
+    const url = `/auth/register`
     return axios.post<IBackendRes<IRegister>>(url, { email, code })
 }
 

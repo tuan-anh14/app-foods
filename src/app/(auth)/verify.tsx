@@ -26,9 +26,6 @@ const VerifyPage = () => {
 
     const { email, isLogin } = useLocalSearchParams();
 
-    useEffect(() => {
-        handleResendCode();
-    }, []);
 
     const verifyCode = async () => {
         //call api
@@ -45,12 +42,12 @@ const VerifyPage = () => {
                 backgroundColor: APP_COLOR.ORANGE,
                 opacity: 1
             });
-
-            if (isLogin) {
-                router.replace("/(tabs)")
-            } else {
-                router.replace("/(auth)/login");
-            }
+            router.replace("/(auth)/login");
+            // if (isLogin) {
+            //     router.replace("/(tabs)")
+            // } else {
+            //     router.replace("/(auth)/login");
+            // }
         } else {
             Toast.show(res.message as string, {
                 duration: Toast.durations.LONG,

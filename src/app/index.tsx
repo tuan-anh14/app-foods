@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 
 const WelcomePage = () => {
   // if (true) {
-  //   return <Redirect href={"/(tabs)/home"} />;
+  //   return <Redirect href={"/(tabs)"} />;
   // }
 
   return (
