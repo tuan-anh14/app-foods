@@ -19,3 +19,8 @@ export const loginAPI = (email: string, password: string) => {
     const url = `/auth/login`
     return axios.post<IBackendRes<IRegister>>(url, { email, password })
 }
+
+export const resetPasswordAPI = (email: string) => {
+    const url = `/auth/forgotPassword`
+    return axios.post<IBackendRes<IRegister>>(url, { email })
+}
