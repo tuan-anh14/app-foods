@@ -31,6 +31,11 @@ export const getAccountAPI = () => {
     return axios.get<IBackendRes<IRegister>>(url)
 }
 
+export const getTopRestaurantAPI = (ref: string) => {
+    const url = `/restaurant/${ref}`
+    return axios.post<IBackendRes<ITopRestaurant[]>>(url)
+}
+
 //check async storage
 export const printAsyncStorage = () => {
     AsyncStorage.getAllKeys((err, keys) => {
