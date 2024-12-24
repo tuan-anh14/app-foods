@@ -14,11 +14,9 @@ const data = [
 ]
 
 const HomeTab = () => {
-    const { setTheme } = useCurrentApp()
     return (
         // <SafeAreaView style={styles.container}>
         <>
-            <Button title="Change context " onPress={() => setTheme('theme update')}></Button>
             <CustomFlatList
                 data={data}
                 style={styles.list}

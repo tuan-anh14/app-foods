@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Platform } from "react-native";
 
@@ -8,9 +9,11 @@ const instance = axios.create({
   });
 
 // Add a request interceptor
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use(async function (config) {
     // Do something before request is sent
-    config.headers['delay'] = 5000;
+    // config.headers['delay'] = 5000;
+    const accesstoken = await AsyncStorage.getItem("accesstoken")
+    config.headers["Authorization"] = `Bearer ${accesstoken}`
     return config;
     }, function (error) {
     // Do something with request error
