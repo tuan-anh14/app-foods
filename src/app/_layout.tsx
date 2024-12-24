@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import AppProvider from "@/context/app.context";
 
 const RootLayout = () => {
 
@@ -16,44 +17,46 @@ const RootLayout = () => {
 
   return (
     <RootSiblingParent>
-      <SafeAreaView style={{ flex: 1 }}>
-        <ThemeProvider value={navTheme}>
-          <Stack
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: "#f4511e",
-              },
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
-            }}
-          >
-            <Stack.Screen
-              name="index"
-              options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(auth)/login"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="(auth)/signup"
-              options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(auth)/verify"
-              options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(auth)/forgot-password"
-              options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(tabs)"
-              options={{ headerShown: false }} />
-            <Stack.Screen
-              name="product/index"
-              options={{ headerShown: false }} />
-          </Stack>
-        </ThemeProvider>
-      </SafeAreaView>
+      <AppProvider>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ThemeProvider value={navTheme}>
+            <Stack
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: "#f4511e",
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
+              }}
+            >
+              <Stack.Screen
+                name="index"
+                options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(auth)/login"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="(auth)/signup"
+                options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(auth)/verify"
+                options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(auth)/forgot-password"
+                options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(tabs)"
+                options={{ headerShown: false }} />
+              <Stack.Screen
+                name="product/index"
+                options={{ headerShown: false }} />
+            </Stack>
+          </ThemeProvider>
+        </SafeAreaView>
+      </AppProvider>
     </RootSiblingParent>
   )
 };
