@@ -17,7 +17,7 @@ export const resendCodeAPI = (email: string, code: string) => {
 
 export const loginAPI = (email: string, password: string) => {
     const url = `/auth/login`
-    return axios.post<IBackendRes<IRegister>>(url, { email, password })
+    return axios.post<IBackendRes<IUserLogin>>(url, { email, password })
 }
 
 export const resetPasswordAPI = (email: string) => {

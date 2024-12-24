@@ -11,4 +11,17 @@ declare global {
     interface IRegister {
         id: string
     }
+
+    interface IUserLogin{
+        user: {
+            id: string,
+            email: string,
+            fcmTokens: [],
+            photo: string,
+            phone: string,
+            name: string,
+            address: string
+        };
+        accesstoken: string
+    }
 }

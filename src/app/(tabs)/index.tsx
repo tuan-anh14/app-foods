@@ -5,7 +5,7 @@ import TopListHome from "@/components/home/top.list.home";
 import { Button, SafeAreaView, StyleSheet, View } from "react-native";
 import CustomFlatList from "@/components/CustomFlatList/CustomFlatList"
 import CollectionHome from "@/components/home/collection.home";
-import { useCurrentTheme } from "@/context/app.context";
+import { useCurrentApp } from "@/context/app.context";
 
 const data = [
     { key: 1, name: "Top Quán Rating 5* tuần này", ref: "" },
@@ -14,7 +14,7 @@ const data = [
 ]
 
 const HomeTab = () => {
-    const { setTheme } = useCurrentTheme()
+    const { setTheme } = useCurrentApp()
     return (
         // <SafeAreaView style={styles.container}>
         <>

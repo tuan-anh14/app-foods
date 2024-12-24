@@ -11,6 +11,7 @@ import Toast from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from 'formik';
 import { LoginSchema } from "@/utils/validate.schema";
+import { useCurrentApp } from "@/context/app.context";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
 });
 const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const { setAppState } = useCurrentApp();
 
   const handleLogin = async (email: string, password: string) => {
     try {
@@ -42,6 +44,8 @@ const LoginPage = () => {
       const res = await loginAPI(email, password);
       setLoading(false)
       if (res.data) {
+        setAppState(res.data)
+        console.log(res.data)
         router.replace("/(tabs)")
       } else {
         const m = Array.isArray(res.message) ? res.message[0] : res.message;
