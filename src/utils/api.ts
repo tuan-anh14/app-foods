@@ -106,3 +106,8 @@ export const placeOrderAPI = (data: any) => {
     const url = '/order';
     return axios.get<IBackendRes<IOrderHistory[]>>(url);
   };
+
+  export const updateUserAPI = (_id: string, name: string, phone: string) => {
+    const url = '/user';
+    return axios.patch<IBackendRes<IUserLogin>>(url, { _id, name, phone });
+};
