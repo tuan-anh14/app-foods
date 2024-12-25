@@ -96,3 +96,13 @@ export const currencyFormatter = (value: any) => {
         )} ${options.symbol}`
 }
     
+
+export const placeOrderAPI = (data: any) => {
+    const url = '/order';
+    return axios.post<IBackendRes<IUserLogin>>(url, { ...data });
+  };
+
+  export const getOrderHistoryAPI = () => {
+    const url = '/order';
+    return axios.get<IBackendRes<IOrderHistory[]>>(url);
+  };

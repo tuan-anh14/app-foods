@@ -4,6 +4,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { currencyFormatter } from "@/utils/api";
 import { useCurrentApp } from "@/context/app.context";
 import React from "react";
+import { router } from "expo-router";
 
 interface IProps {
     restaurant: IRestaurant | null;
@@ -48,7 +49,7 @@ const StickyFooter = (props: IProps) => {
                     </View>
 
                     {/* Delivery Button */}
-                    <Pressable style={styles.deliveryButton} onPress={() => alert("giao hàng")}>
+                    <Pressable style={styles.deliveryButton} onPress={() => router.navigate("/product/place.order")}>
                         <Text style={styles.deliveryButtonText}>Giao hàng</Text>
                     </Pressable>
                 </View>

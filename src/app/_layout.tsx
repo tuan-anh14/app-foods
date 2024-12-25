@@ -5,6 +5,7 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import AppProvider from "@/context/app.context";
 import { Button, Text, View } from "react-native";
+import { APP_COLOR } from "@/utils/constant";
 
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
@@ -42,12 +43,9 @@ const RootLayout = () => {
         <ThemeProvider value={navTheme}>
           <Stack
             screenOptions={{
-              headerStyle: {
-                backgroundColor: "#f4511e",
-              },
-              headerTintColor: "#fff",
+              headerTintColor: APP_COLOR.ORANGE,
               headerTitleStyle: {
-                fontWeight: "bold",
+                color: "black",
               },
             }}
           >
@@ -90,6 +88,9 @@ const RootLayout = () => {
                 animation: "fade",
                 presentation: "transparentModal",
               }} />
+            <Stack.Screen
+              name="product/place.order"
+              options={{ headerTitle: "Xác nhận đơn hàng" }} />
           </Stack>
         </ThemeProvider>
         {/* </SafeAreaView> */}
