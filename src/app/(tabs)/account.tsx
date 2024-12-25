@@ -1,60 +1,147 @@
-import ShareInput from "@/components/input/share.input";
-import { useCurrentApp } from "@/context/app.context";
-import { View, Text, Platform, Image, StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 15,
-        paddingTop: 50
-    }
-})
+
+import { useCurrentApp } from "@/context/app.context";
+import { getURLBaseBackend } from "@/utils/api";
+import { APP_COLOR } from "@/utils/constant";
+import { Image, Pressable, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Feather from '@expo/vector-icons/Feather';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { router } from "expo-router";
+
+
+
 
 const AccountPage = () => {
-    const { theme, appState } = useCurrentApp();
-
-    const backend = Platform.OS === "android"
-        ? process.env.EXPO_PUBLIC_ANDROID_API_URL
-        : process.env.EXPO_PUBLIC_IOS_API_URL;
-
-    const baseImage = `${backend}/images/avatar`;
+    const { appState } = useCurrentApp();
+    const baseImage = `${getURLBaseBackend()}/images/avatar`;
+    const insets = useSafeAreaInsets();
 
     return (
-        <View style={styles.container}>
-            <View style={{ alignItems: "center", gap: 5 }}>
+        <View style={{ flex: 1 }}>
+            <View style={{
+                paddingTop: insets.top,
+                paddingHorizontal: 20,
+                paddingBottom: 20,
+                backgroundColor: APP_COLOR.ORANGE,
+                flexDirection: "row",
+                gap: 20,
+                alignItems: "center"
+            }}>
                 <Image
-                    style={{ height: 150, width: 150 }}
+                    style={{ height: 60, width: 60 }}
                     source={{ uri: `${baseImage}/${appState?.user.photo}` }}
                 />
-                <Text>{appState?.user.name}</Text>
+                <View>
+                    <Text style={{ color: "white", fontSize: 20 }}>{appState?.user.name}</Text>
+                </View>
             </View>
-            <View style={{ marginTop: 20, gap: 20 }}>
-                <ShareInput
-                    title="Họ tên"
-                    // onChangeText={handleChange('email')}
-                    // onBlur={handleBlur('email')}
-                    // value={values.email}
-                    // error={errors.email}
-                    value={appState?.user.name}
-                />
-                <ShareInput
-                    title="Email"
-                    keyboardType="email-address"
-                    // onChangeText={handleChange('email')}
-                    // onBlur={handleBlur('email')}
-                    // value={values.email}
-                    // error={errors.email}
-                    value={appState?.user.email}
-                />
-                <ShareInput
-                    title="Số điện thoại"
-                    // onChangeText={handleChange('name')}
-                    // onBlur={handleBlur('name')}
-                    // value={values.name}
-                    // error={errors.name}
-                    value={appState?.user.phone}
-                />
+            <Pressable
+                onPress={() => { router.navigate("/(user)/account/info") }}
+                style={{
+                    paddingVertical: 15,
+                    paddingHorizontal: 10,
+                    borderBottomColor: '#eee',
+                    borderBottomWidth: 1,
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }}>
+                <View style={{
+                    flexDirection: 'row',
+                    gap: 10,
+                    alignItems: 'center'
+                }}>
+                    <Feather name="user-check" size={20} color="green" />
+                    <Text>Cập nhật thông tin</Text>
+                </View>
+                <MaterialIcons name="navigate-next" size={24} color="grey" />
+            </Pressable>
+            <Pressable style={{
+                paddingVertical: 15,
+                paddingHorizontal: 10,
+                borderBottomColor: '#eee',
+                borderBottomWidth: 1,
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                alignItems: 'center'
+            }}>
+                <View style={{
+                    flexDirection: 'row',
+                    gap: 10,
+                    alignItems: 'center'
+                }}>
+                    <MaterialIcons name="password" size={24} color="green" />
+                    <Text>Thay đổi mật khẩu</Text>
+                </View>
+                <MaterialIcons name="navigate-next" size={24} color="grey" />
+            </Pressable>
+            <Pressable style={{
+                paddingVertical: 15,
+                paddingHorizontal: 10,
+                borderBottomColor: '#eee',
+                borderBottomWidth: 1,
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                alignItems: 'center'
+            }}>
+                <View style={{
+                    flexDirection: 'row',
+                    gap: 10,
+                    alignItems: 'center'
+                }}>
+                    <Feather name="globe" size={24} color="green" />
+                    <Text>Ngôn ngữ</Text>
+                </View>
+                <MaterialIcons name="navigate-next" size={24} color="grey" />
+            </Pressable>
+            <Pressable style={{
+                paddingVertical: 15,
+                paddingHorizontal: 10,
+                borderBottomColor: '#eee',
+                borderBottomWidth: 1,
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                alignItems: 'center'
+            }}>
+                <View style={{
+                    flexDirection: 'row',
+                    gap: 10,
+                    alignItems: 'center'
+                }}>
+                    <AntDesign name="exclamationcircleo" size={24} color="green" />
+                    <Text>Về ứng dụng</Text>
+                </View>
+                <MaterialIcons name="navigate-next" size={24} color="grey" />
+            </Pressable>
+            <View style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                gap: 10,
+                paddingBottom: 15
+            }}>
+                <Pressable
+                    style={({ pressed }) => ({
+                        opacity: pressed === true ? 0.5 : 1,
+                        padding: 10,
+                        marginHorizontal: 10,
+                        backgroundColor: APP_COLOR.ORANGE,
+                        borderRadius: 3
+                    })}
+                >
+                    <Text style={{
+                        textAlign: "center",
+                        color: "white"
+                    }}>
+                        Đăng Xuất
+                    </Text>
+                </Pressable>
+                <Text style={{ textAlign: "center", color: APP_COLOR.GREY }}>
+                    Version 1.0 - @tuananh
+                </Text>
             </View>
-        </View>
+        </View >
     );
 };
 

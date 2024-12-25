@@ -72,25 +72,28 @@ const RootLayout = () => {
               name="(tabs)"
               options={{ headerShown: false }} />
             <Stack.Screen
-              name="product/[id]"
+              name="(user)/product/[id]"
               options={{ headerShown: false }} />
             <Stack.Screen
-              name="product/create.modal"
+              name="(user)/product/create.modal"
               options={{
                 headerShown: false,
                 animation: "fade",
                 presentation: "transparentModal",
               }} />
             <Stack.Screen
-              name="product/update.modal"
+              name="(user)/product/update.modal"
               options={{
                 headerShown: false,
                 animation: "fade",
                 presentation: "transparentModal",
               }} />
             <Stack.Screen
-              name="product/place.order"
+              name="(user)/product/place.order"
               options={{ headerTitle: "Xác nhận đơn hàng" }} />
+            <Stack.Screen
+              name="(user)/account/info"
+              options={{ headerTitle: "Cập nhật thông tin" }} />
           </Stack>
         </ThemeProvider>
         {/* </SafeAreaView> */}
