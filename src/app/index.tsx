@@ -1,7 +1,7 @@
 
 import { Link, Redirect, router } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { getAccountAPI, printAsyncStorage } from "@/utils/api";
 import { useCurrentApp } from "@/context/app.context";
@@ -14,6 +14,7 @@ SplashScreen.preventAutoHideAsync();
 
 const RootPage = () => {
   const { setAppState } = useCurrentApp()
+  const [state, setState] = useState<any>();
 
   useEffect(() => {
     async function prepare() {
@@ -35,7 +36,12 @@ const RootPage = () => {
           router.replace("/(auth)/welcome")
         }
       } catch (e) {
-        console.warn(e);
+        setState(() => {
+          throw new Error("Không thể kết nối với API backend...")
+
+        })
+        // console.log("Không thể kết nối với API backend...")
+        // console.warn(e);
       } finally {
         // Tell the application to render
         await SplashScreen.hideAsync();

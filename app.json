@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app-learning-languages",
-    "slug": "app-learning-languages",
+    "name": "foods-app",
+    "slug": "foods-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -24,7 +24,7 @@
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
-    "scheme": "app-learning-languages",
+    "scheme": "foods-app",
     "plugins": [
       "expo-router"
     ],
