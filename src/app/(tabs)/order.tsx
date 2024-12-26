@@ -1,7 +1,8 @@
 import { currencyFormatter, getOrderHistoryAPI, getURLBaseBackend } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
 import { useEffect, useState } from "react";
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, Image, StyleSheet, Pressable } from "react-native";
+import { MaterialIcons } from '@expo/vector-icons'; // Thêm thư viện icon
 
 const OrderPage = () => {
     const [orderHistory, setOrderHistory] = useState<IOrderHistory[]>([]);
@@ -17,34 +18,100 @@ const OrderPage = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                <View style={{
-                    borderBottomColor: '#eee',
-                    borderBottomWidth: 1,
-                    paddingHorizontal: 10,
-                    paddingBottom: 5
-                }}>
-                    <Text style={{ color: APP_COLOR.ORANGE }}>Lịch sử đơn hàng</Text>
+                {/* Header */}
+                <View style={styles.header}>
+                    <MaterialIcons name="history" size={24} color={APP_COLOR.ORANGE} />
+                    <Text style={styles.headerText}>Lịch sử đơn hàng</Text>
                 </View>
-                <ScrollView style={{ flex: 1 }}>
-                    {orderHistory.map((item, index) => {
-                        return (
-                            <View key={index}>
-                                <View style={{ padding: 10, flexDirection: "row", gap: 10 }}>
-                                    <Image source={{ uri: `${getURLBaseBackend()}/images/restaurant/${item.restaurant.image}` }} style={{ height: 100, width: 100 }} />
-                                    <View style={{ gap: 10 }}>
-                                        <Text>{item.restaurant.name}</Text>
-                                        <Text>{item.restaurant.address}</Text>
-                                        <Text>{currencyFormatter(item.totalPrice)}</Text>
-                                        <Text>Trạng thái: {item.status}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ height: 10, backgroundColor: "#eee" }}></View>
-                            </View >
-                        );
-                    })}
+
+                {/* List of Orders */}
+                <ScrollView
+                    style={{ flex: 1 }}
+                    contentContainerStyle={styles.orderList}
+                >
+                    {orderHistory.map((item, index) => (
+                        <Pressable
+                            key={index}
+                            style={styles.orderItem}
+                        >
+                            {/* Hiển thị hình ảnh của nhà hàng */}
+                            <Image
+                                source={{ uri: `${getURLBaseBackend()}/images/restaurant/${item.restaurant.image}` }}
+                                style={styles.restaurantImage}
+                            />
+                            <View style={styles.orderDetails}>
+                                {/* Thông tin nhà hàng và đơn hàng */}
+                                <Text style={styles.restaurantName}>{item.restaurant.name}</Text>
+                                <Text style={styles.restaurantAddress}>{item.restaurant.address}</Text>
+                                <Text style={styles.orderPrice}>{currencyFormatter(item.totalPrice)}</Text>
+                                <Text style={styles.orderStatus}>Trạng thái: {item.status}</Text>
+                            </View>
+                        </Pressable>
+                    ))}
                 </ScrollView>
             </View>
         </SafeAreaView>
-    )
+    );
 };
+
+const styles = StyleSheet.create({
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: '#eee',
+        borderBottomWidth: 1,
+        padding: 10,
+    },
+    headerText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: APP_COLOR.ORANGE,  // Sử dụng màu APP_COLOR.ORANGE cho tiêu đề
+        marginLeft: 10,
+    },
+    orderList: {
+        paddingBottom: 20,
+    },
+    orderItem: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        margin: 10,
+        padding: 15,
+        flexDirection: 'row',
+        gap: 10,
+        borderBottomColor: '#eee',
+        borderBottomWidth: 1,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,  // For Android shadow
+    },
+    restaurantImage: {
+        height: 100,
+        width: 100,
+        borderRadius: 10,
+    },
+    orderDetails: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    restaurantName: {
+        fontSize: 16,
+        color: 'black',
+        fontWeight: 'bold',
+    },
+    restaurantAddress: {
+        fontSize: 14,
+        color: '#666',
+    },
+    orderPrice: {
+        fontSize: 16,
+        color: APP_COLOR.ORANGE,  // Sử dụng màu cam cho giá trị đơn hàng
+    },
+    orderStatus: {
+        fontSize: 14,
+        color: '#666',
+    },
+});
+
 export default OrderPage;

@@ -113,17 +113,17 @@ export const placeOrderAPI = (data: any) => {
 };
 
 export const likeRestaurantAPI = (restaurant: string, quantity: number) => {
-    const url = '/likes';
+    const url = '/like';
     return axios.post<IBackendRes<IUserLogin>>(url, { restaurant, quantity });
 };
 
 export const getFavoriteRestaurantAPI = () => {
-    const url = '/likes?current=1&pageSize=10';
+    const url = '/like';
     return axios.get<IBackendRes<IRestaurant[]>>(url);
 };
 
 export const getNotificationsAPI = () => {
-    const url = '/notifications';
+    const url = '/notification';
     return axios.get<IBackendRes<INotification[]>>(url);
 };
 
