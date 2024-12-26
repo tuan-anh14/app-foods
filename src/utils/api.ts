@@ -111,3 +111,23 @@ export const placeOrderAPI = (data: any) => {
     const url = '/user';
     return axios.patch<IBackendRes<IUserLogin>>(url, { _id, name, phone });
 };
+
+export const likeRestaurantAPI = (restaurant: string, quantity: number) => {
+    const url = '/likes';
+    return axios.post<IBackendRes<IUserLogin>>(url, { restaurant, quantity });
+};
+
+export const getFavoriteRestaurantAPI = () => {
+    const url = '/likes?current=1&pageSize=10';
+    return axios.get<IBackendRes<IRestaurant[]>>(url);
+};
+
+export const getNotificationsAPI = () => {
+    const url = '/notifications';
+    return axios.get<IBackendRes<INotification[]>>(url);
+};
+
+export const changePasswordAPI = () => {
+    const url = '/user/change-password';
+    return axios.get<IBackendRes<IUserLogin[]>>(url);
+};

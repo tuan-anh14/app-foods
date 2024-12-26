@@ -23,5 +23,12 @@ export const UpdateUserSchema = Yup.object().shape({
     phone: Yup.string()
       .required('Số điện thoại không được để trống'),
   });
+
+  export const ChangePasswordSchema = Yup.object().shape({
+    password: Yup.string()
+    .min(6, 'Password cần tối thiểu 6 ký tự !')
+    .max(50, 'Password tối đa 50 ký tự !')
+    .required('Password không được để trống !'),
+  });
     
     

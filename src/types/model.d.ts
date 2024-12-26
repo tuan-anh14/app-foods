@@ -51,6 +51,7 @@ declare global {
         updatedAt: Date,
 
         menu: IMenu[];
+        isLike: boolean;
     }
 
     interface IMenu {
@@ -111,6 +112,20 @@ declare global {
         createdAt: Date;
         updatedAt: Date;
         }
+
+        interface INotification {
+            _id: string;
+            restaurant: IRestaurant;
+            message: string;
+            user: string;
+            status: string;
+            detail: {
+            image: string;
+            title: string;
+            }[]
+            createdAt: Date;
+            updatedAt: Date;
+            }
         
         
 }
