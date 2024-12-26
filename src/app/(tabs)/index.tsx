@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderHome from "@/components/home/header.home";
 import SearchHome from "@/components/home/search.home";
 import TopListHome from "@/components/home/top.list.home";
@@ -6,6 +6,7 @@ import { Button, StyleSheet, View } from "react-native";
 import CustomFlatList from "@/components/CustomFlatList/CustomFlatList"
 import CollectionHome from "@/components/home/collection.home";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 const data = [
     {
@@ -29,6 +30,9 @@ const data = [
 ]
 
 const HomeTab = () => {
+    useEffect(() => {
+        router.navigate("/(auth)/popup.sale")
+    }, [])
     return (
         // <SafeAreaView style={styles.container}>
         <SafeAreaView style={{ flex: 1 }}>
