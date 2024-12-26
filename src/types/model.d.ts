@@ -113,19 +113,28 @@ declare global {
         updatedAt: Date;
         }
 
-        interface INotification {
-            _id: string;
-            restaurant: IRestaurant;
-            message: string;
-            user: string;
-            status: string;
-            detail: {
-            image: string;
-            title: string;
-            }[]
-            createdAt: Date;
-            updatedAt: Date;
-            }
+    interface INotification {
+        _id: string;
+        restaurant: IRestaurant;
+        message: string;
+        user: string;
+        status: string;
+        detail: {
+        image: string;
+        title: string;
+        }[]
+        createdAt: Date;
+        updatedAt: Date;
+        }
         
-        
+    interface IModelPaginate<T> {
+        meta: {
+            current: number;
+            pageSize: number;
+            pages: number;
+            total: number;
+        };
+        results: T[];
+        }
+
 }

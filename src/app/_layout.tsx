@@ -66,6 +66,9 @@ const RootLayout = () => {
               name="(auth)/verify"
               options={{ headerShown: false }} />
             <Stack.Screen
+              name="(auth)/search"
+              options={{ headerShown: false }} />
+            <Stack.Screen
               name="(auth)/forgot-password"
               options={{ headerShown: false }} />
             <Stack.Screen

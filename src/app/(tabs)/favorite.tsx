@@ -1,10 +1,11 @@
 import { currencyFormatter, getFavoriteRestaurantAPI, getURLBaseBackend } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
 import { useEffect, useState } from "react";
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, Image, RefreshControl } from "react-native";
 
 const FavoritePage = () => {
     const [favoriteRestaurants, setFavoriteRestaurants] = useState<IRestaurant[]>([]);
+    const [refreshing, setRefreshing] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchFavoriteRestaurants = async () => {
@@ -13,6 +14,12 @@ const FavoritePage = () => {
         };
         fetchFavoriteRestaurants();
     }, []);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await getFavoriteRestaurantAPI();
+        setRefreshing(false);
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -23,9 +30,17 @@ const FavoritePage = () => {
                     paddingHorizontal: 10,
                     paddingBottom: 5
                 }}>
-                    <Text style={{ color: APP_COLOR.ORANGE }}>Danh sách yêu thích</Text>
+                    <Text style={{ color: APP_COLOR.ORANGE }}>Danh sách quán ăn yêu thích</Text>
                 </View>
-                <ScrollView style={{ flex: 1 }}>
+                <ScrollView
+                    style={{ flex: 1 }}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
                     {favoriteRestaurants.map((item, index) => (
                         <View key={index}>
                             <View style={{ padding: 10, flexDirection: "row", gap: 10 }}>

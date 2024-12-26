@@ -131,3 +131,8 @@ export const changePasswordAPI = () => {
     const url = '/user/change-password';
     return axios.get<IBackendRes<IUserLogin[]>>(url);
 };
+
+export const getRestaurantByNameAPI = (name: string) => {
+    const url = `/restaurant?current=1&pageSize=10&name=${name}`;
+    return axios.get<IBackendRes<IModelPaginate<IRestaurant>>>(url);
+  };
