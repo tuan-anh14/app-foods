@@ -119,7 +119,12 @@ export const likeRestaurantAPI = (restaurant: string, quantity: number) => {
 
 export const getFavoriteRestaurantAPI = () => {
     const url = '/like';
-    return axios.get<IBackendRes<IRestaurant[]>>(url);
+    return axios.get<IBackendRes<ILikeRestaurant[]>>(url);
+};
+
+export const deleteLikeRestaurantAPI = () => {
+    const url = '/like/delete';
+    return axios.post<IBackendRes<ILikeRestaurant>>(url);
 };
 
 export const getNotificationsAPI = () => {

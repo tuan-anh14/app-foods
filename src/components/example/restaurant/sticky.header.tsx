@@ -4,17 +4,21 @@ import { Dimensions, Pressable, StyleSheet, TextInput, View } from "react-native
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import React, { useEffect, useState } from "react";
+import { useCurrentApp } from "@/context/app.context";
+import { likeRestaurantAPI } from "@/utils/api";
+import Toast from "react-native-root-toast";
 
-const AnimatedMaterialIcons = Animated.createAnimatedComponent(MaterialIcons)
+const AnimatedMaterialIcons = Animated.createAnimatedComponent(MaterialIcons);
 const { height: sHeight, width: sWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+    // Thêm các style nếu cần  
+});
 
-})
 interface IProps {
     headerHeight: number;
     imageHeight: number;
-
     animatedBackgroundStyle: any;
     animatedArrowColorStyle: any;
     animatedStickyHeaderStyle: any;
@@ -30,7 +34,35 @@ const StickyHeader = (props: IProps) => {
         animatedHeartIconStyle
     } = props;
 
-    // nút Back và like/dislike gộp vào component này, vì nó có zIndex cao nhất => có thể pressabled
+    const [like, setLike] = useState<boolean>(false); // Khởi tạo trạng thái like là false  
+    const { restaurant, appState } = useCurrentApp();
+
+    useEffect(() => {
+        if (restaurant) {
+            setLike(restaurant.isLike); // Thiết lập lại trạng thái like khi restaurant thay đổi  
+        }
+    }, [restaurant]);
+
+    const handleLikeRestaurant = async () => {
+        // Chỉ thực hiện khi user đã đăng nhập  
+        if (appState?.user.id && restaurant) {
+            const quantity = like === true ? -1 : 1; // Lấy phủ định  
+            const res = await likeRestaurantAPI(restaurant?._id, quantity);
+
+            if (res.data) {
+                // Success  
+                setLike(!like); // Đảo ngược trạng thái like  
+            } else {
+                Toast.show("Update like success !", {
+                    duration: Toast.durations.LONG,
+                    textColor: 'white',
+                    backgroundColor: APP_COLOR.ORANGE,
+                    opacity: 1
+                });
+            }
+        }
+    };
+
     return (
         <>
             <View style={{
@@ -71,8 +103,8 @@ const StickyHeader = (props: IProps) => {
                         }}
                     />
                 </Animated.View>
-
             </View>
+
             {/* background */}
             <Animated.View style={[{
                 position: 'absolute',
@@ -91,11 +123,15 @@ const StickyHeader = (props: IProps) => {
                 right: 10,
                 zIndex: 9,
             }, animatedHeartIconStyle]}>
-                {/* <MaterialIcons name="favorite" size={20} color="black" /> */}
-                <MaterialIcons onPress={() => alert("like")} name="favorite-outline" size={20} color={APP_COLOR.GREY} />
+                <MaterialIcons
+                    onPress={handleLikeRestaurant}
+                    name={like === true ? "favorite" : "favorite"}
+                    size={20}
+                    color={like === true ? APP_COLOR.ORANGE : APP_COLOR.ORANGE}
+                />
             </Animated.View>
         </>
-    )
+    );
 }
 
-export default StickyHeader;
+export default StickyHeader; 

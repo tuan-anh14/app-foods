@@ -3,7 +3,7 @@ import { APP_COLOR } from "@/utils/constant";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text, SafeAreaView, ScrollView, Image, RefreshControl, Pressable, StyleSheet } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons'; // Thêm thư viện icon
+import { MaterialIcons } from '@expo/vector-icons';
 
 const FavoritePage = () => {
     const [favoriteRestaurants, setFavoriteRestaurants] = useState<any[]>([]);
@@ -12,14 +12,22 @@ const FavoritePage = () => {
     useEffect(() => {
         const fetchFavoriteRestaurants = async () => {
             const res = await getFavoriteRestaurantAPI();
-            if (res.data) setFavoriteRestaurants(res.data);
+            if (res.data) {
+                const filteredRestaurants = res.data.filter(item => item.quantity % 2 !== 0);
+
+                setFavoriteRestaurants(filteredRestaurants);
+            }
         };
         fetchFavoriteRestaurants();
     }, []);
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await getFavoriteRestaurantAPI();
+        const res = await getFavoriteRestaurantAPI();
+        if (res.data) {
+            const filteredRestaurants = res.data.filter(item => item.quantity % 2 !== 0);
+            setFavoriteRestaurants(filteredRestaurants);
+        }
         setRefreshing(false);
     };
 
@@ -43,27 +51,31 @@ const FavoritePage = () => {
                     }
                     contentContainerStyle={styles.restaurantList}
                 >
-                    {favoriteRestaurants.map((item, index) => (
-                        <Pressable
-                            key={index}
-                            onPress={() => router.push({
-                                pathname: "/product/[id]",
-                                params: { id: item.restaurant._id }
-                            })}
-                            style={styles.restaurantItem}
-                        >
-                            {/* Hiển thị hình ảnh của nhà hàng */}
-                            <Image
-                                source={{ uri: `${getURLBaseBackend()}/images/restaurant/${item.restaurant.image}` }}
-                                style={styles.restaurantImage}
-                            />
-                            <View style={styles.restaurantDetails}>
-                                {/* Truy cập các thuộc tính trong restaurant */}
-                                <Text style={styles.restaurantName}>{item.restaurant.name}</Text>
-                                <Text style={styles.restaurantAddress}>{item.restaurant.address}</Text>
-                            </View>
-                        </Pressable>
-                    ))}
+                    {favoriteRestaurants.length > 0 ? (
+                        favoriteRestaurants.map((item, index) => (
+                            <Pressable
+                                key={index}
+                                onPress={() => router.push({
+                                    pathname: "/product/[id]",
+                                    params: { id: item.restaurant._id }
+                                })}
+                                style={styles.restaurantItem}
+                            >
+                                {/* Hiển thị hình ảnh của nhà hàng */}
+                                <Image
+                                    source={{ uri: `${getURLBaseBackend()}/images/restaurant/${item.restaurant.image}` }}
+                                    style={styles.restaurantImage}
+                                />
+                                <View style={styles.restaurantDetails}>
+                                    {/* Truy cập các thuộc tính trong restaurant */}
+                                    <Text style={styles.restaurantName}>{item.restaurant.name}</Text>
+                                    <Text style={styles.restaurantAddress}>{item.restaurant.address}</Text>
+                                </View>
+                            </Pressable>
+                        ))
+                    ) : (
+                        <Text style={styles.noFavoriteText}>Không có món ăn yêu thích nào.</Text>
+                    )}
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -101,7 +113,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5, // For Android shadow
+        elevation: 5,
     },
     restaurantImage: {
         height: 100,
@@ -119,6 +131,16 @@ const styles = StyleSheet.create({
     },
     restaurantAddress: {
         fontSize: 14,
+        color: '#666',
+    },
+    restaurantQuantity: {
+        fontSize: 14,
+        color: '#666',
+    },
+    noFavoriteText: {
+        textAlign: 'center',
+        margin: 20,
+        fontSize: 16,
         color: '#666',
     },
 });

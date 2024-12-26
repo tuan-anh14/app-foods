@@ -137,4 +137,15 @@ declare global {
         results: T[];
         }
 
+
+        interface ILikeRestaurant {
+            _id: string; 
+            restaurant: IRestaurant; 
+            user: string; 
+            quantity: number; 
+            createdAt: Date; 
+            updatedAt: Date; 
+        }
+        
+
 }
