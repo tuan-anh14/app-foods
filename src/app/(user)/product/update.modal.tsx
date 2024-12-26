@@ -5,7 +5,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { APP_COLOR } from "@/utils/constant";
 import { useCurrentApp } from "@/context/app.context";
 import { useEffect, useState } from "react";
-import { currencyFormatter } from "@/utils/api";
+import { currencyFormatter, getURLBaseBackend } from "@/utils/api";
 
 interface IUpdatedItem {
     image: string;
@@ -179,6 +179,7 @@ const UpdateModalPage = () => {
                     }}
                 >
                     {updatedItems.length > 0 ? (
+                        console.log(updatedItems),
                         updatedItems.map((item, index) => (
                             <View
                                 key={index}
@@ -194,7 +195,7 @@ const UpdateModalPage = () => {
                             >
                                 {/* Product Image */}
                                 <Image
-                                    source={{ uri: item.image }}
+                                    source={{ uri: `${getURLBaseBackend()}/images/menu-item/${item.image}` }}
                                     style={{
                                         width: 50,
                                         height: 50,
@@ -239,7 +240,7 @@ const UpdateModalPage = () => {
 
                                             {/* Quantity */}
                                             <Text style={{ fontSize: 16 }}>
-                                                {item?.quantity || 0} {/* Tránh hiện NaN */}
+                                                {item?.quantity || 0}
                                             </Text>
 
                                             {/* Plus Button */}

@@ -43,8 +43,9 @@ const OrderPage = () => {
                                 {/* Thông tin nhà hàng và đơn hàng */}
                                 <Text style={styles.restaurantName}>{item.restaurant.name}</Text>
                                 <Text style={styles.restaurantAddress}>{item.restaurant.address}</Text>
-                                <Text style={styles.orderPrice}>{currencyFormatter(item.totalPrice)}</Text>
-                                <Text style={styles.orderStatus}>Trạng thái: {item.status}</Text>
+                                <Text style={styles.orderPrice}>Tổng tiền: {currencyFormatter(item.totalPrice)}</Text>
+                                <Text style={styles.orderPrice}>Số lượng: {item.totalQuantity}</Text>
+                                <Text style={styles.orderStatus}>Trạng thái: ODERED</Text>
                             </View>
                         </Pressable>
                     ))}

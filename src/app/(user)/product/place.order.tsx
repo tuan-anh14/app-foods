@@ -104,6 +104,7 @@ const PlaceOrderPage = () => {
             </View>
             <ScrollView style={{ flex: 1, padding: 10 }}>
                 {orderItems?.map((item, index) => {
+                    console.log(item)
                     return (
                         <View key={index}
                             style={{
@@ -115,7 +116,7 @@ const PlaceOrderPage = () => {
                             }}>
                             <Image
                                 style={{ height: 50, width: 50 }}
-                                source={{ uri: `${getURLBaseBackend()}/images/menu-item/${item.image}}` }}
+                                source={{ uri: `${getURLBaseBackend()}/images/menu-item/${item.image}` }}
                             />
                             <View>
                                 <Text style={{ fontWeight: "600" }}>
