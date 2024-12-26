@@ -1,5 +1,7 @@
 import { Text, View, FlatList, StyleSheet, Image } from "react-native";
 import BannerHome from "./banner.home";
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { APP_COLOR } from "@/utils/constant";
 
 const styles = StyleSheet.create({
     container: {
@@ -15,11 +17,42 @@ const styles = StyleSheet.create({
     item: {
         padding: 10,
         margin: 5,
-        backgroundColor: 'lightblue',
+        backgroundColor: '#f0f8ff', // Màu nền nhẹ hơn 
         width: 100,
         alignItems: 'center',
         justifyContent: 'center',
-    }
+        elevation: 3, // Bóng đổ nhẹ 
+    },
+    itemContainer: {
+        padding: 6,
+        width: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff', // Màu nền sáng  
+        borderRadius: 10, // Bo góc  
+        marginHorizontal: 5, // Khoảng cách giữa các mục  
+        shadowColor: '#000', // Màu bóng  
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.3, // Độ mờ bóng  
+        shadowRadius: 4, // Đường kính bóng  
+        elevation: 5, // Đối với Android  
+    },
+    itemImage: {
+        height: 40,
+        width: 40,
+        marginBottom: 5,
+        borderRadius: 10, // Bo góc cho hình ảnh  
+    },
+    itemName: {
+        textAlign: "center",
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 2, // Khoảng cách giữa tên và biểu tượng  
+    },
 });
 
 const data1 = [
@@ -59,20 +92,15 @@ const TopListHome = () => {
                     showsHorizontalScrollIndicator={true}
                     scrollEnabled={true}
                     renderItem={({ item, index }) => (
-                        <View style={{
-                            padding: 5,
-                            width: 100,
-                            alignItems: 'center'
-                        }}>
+                        <View style={styles.itemContainer}>
                             <Image
                                 source={item.source}
-                                style={{
-                                    height: 35, width: 35
-                                }}
+                                style={styles.itemImage}
                             />
-                            <Text style={{ textAlign: "center" }}>
+                            <Text style={styles.itemName}>
                                 {item.name}
                             </Text>
+                            <AntDesign name="checkcircle" size={14} color={APP_COLOR.ORANGE} />
                         </View>
                     )}
                     keyExtractor={(item, index) => index.toString()}

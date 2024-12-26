@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import HeaderHome from "@/components/home/header.home";
 import SearchHome from "@/components/home/search.home";
 import TopListHome from "@/components/home/top.list.home";
-import { Button, StyleSheet, View } from "react-native";
-import CustomFlatList from "@/components/CustomFlatList/CustomFlatList"
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import CustomFlatList from "@/components/CustomFlatList/CustomFlatList";
 import CollectionHome from "@/components/home/collection.home";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import AntDesign from '@expo/vector-icons/AntDesign'; // Đảm bảo import AntDesign cho biểu tượng  
 
 const data = [
     {
@@ -27,65 +28,63 @@ const data = [
         description: "Bánh ngọt, chân gà, bánh tráng, ...",
         refAPI: "top-freeship"
     },
-]
+];
 
 const HomeTab = () => {
     useEffect(() => {
-        router.navigate("/(auth)/popup.sale")
-    }, [])
+        router.navigate("/(auth)/popup.sale");
+    }, []);
+
     return (
-        // <SafeAreaView style={styles.container}>
         <SafeAreaView style={{ flex: 1 }}>
             <CustomFlatList
                 data={data}
                 style={styles.list}
-                renderItem={({ item }) => (<CollectionHome
-                    name={item.name}
-                    description={item.description}
-                    refAPI={item.refAPI}
-                />)}
+                renderItem={({ item }) => (
+                    <View style={styles.collectionContainer}>
+                        <CollectionHome
+                            name={item.name}
+                            description={item.description}
+                            refAPI={item.refAPI}
+                        />
+                    </View>
+                )}
                 HeaderComponent={<HeaderHome />}
                 StickyElementComponent={<SearchHome />}
                 TopListElementComponent={<TopListHome />}
             />
         </SafeAreaView>
-        // </SafeAreaView>
     );
 };
 
 export default HomeTab;
 
-
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#ecf0f1",
-        flex: 1,
-        justifyContent: "center",
-        overflow: "hidden"
-    },
-    header: {
-        borderColor: "red",
-        borderWidth: 5,
-        height: 100,
-        marginBottom: 6,
-        width: "100%"
-    },
-    item: {
-        borderColor: "green",
-        borderWidth: 1,
-        height: 250,
-        marginBottom: 10,
-        width: "100%"
-    },
     list: {
         overflow: "hidden"
     },
-    sticky: {
-        backgroundColor: "#2555FF50",
-        borderColor: "blue",
-        borderWidth: 5,
-        height: 100,
-        marginBottom: 6,
-        width: "100%"
-    }
-})
+    collectionContainer: {
+        marginVertical: 5,
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between', // Giữa tiêu đề và nút "Xem tất cả"  
+    },
+    icon: {
+        marginRight: 10, // Khoảng cách giữa biểu tượng và tên  
+    },
+    headerText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        flex: 1, // Để tên có thể chiếm không gian còn lại  
+    },
+    seeAllContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    seeAllText: {
+        color: "#5a5a5a",
+        paddingRight: 5,
+    },
+});

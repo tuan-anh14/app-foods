@@ -19,8 +19,8 @@ const data = [
     { key: 2, name: "Quán Ngon", source: require("@/assets/icons/nice-shop.png") },
     { key: 3, name: "Tích Điểm", source: require("@/assets/icons/points.png") },
     { key: 4, name: "Ngọt Xỉu", source: require("@/assets/icons/rice.png") },
-    { key: 5, name: "Quán Tiền Bối", source: require("@/assets/icons/noodles.png") },
-    { key: 6, name: "Bún, Mì, Phở", source: require("@/assets/icons/bun-pho.png") },
+    { key: 5, name: "Quán TB", source: require("@/assets/icons/noodles.png") },
+    { key: 6, name: "Bún, Mì", source: require("@/assets/icons/bun-pho.png") },
     { key: 7, name: "BBQ", source: require("@/assets/icons/bbq.png") },
     { key: 8, name: "Fast Food", source: require("@/assets/icons/fastfood.png") },
 ];
@@ -61,7 +61,7 @@ const SearchPage = () => {
     const DefaultResult = () => {
         return (
             <View style={{ backgroundColor: "white", padding: 10, gap: 10 }}>
-                <Text style={{ fontWeight: 'bold' }}>Phổ biến</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Phổ biến</Text>
                 <FlatList
                     data={data}
                     numColumns={2}
@@ -71,17 +71,25 @@ const SearchPage = () => {
                                 flexDirection: "row",
                                 justifyContent: "space-between",
                                 alignItems: "center",
-                                padding: 10,
+                                padding: 15, // Tăng padding để phần tử lớn hơn  
                                 flex: 1,
                                 borderColor: "#eee",
-                                borderTopWidth: (index === 0 || index === 1) ? 1 : 0,
-                                borderBottomWidth: 1,
-                                borderLeftWidth: 1,
-                                borderRightWidth: index % 2 === 1 ? 1 : 0,
+                                borderWidth: 1, // Thêm borderWidth cho toàn bộ  
+                                borderRadius: 10, // Bo tròn góc  
+                                margin: 5, // Thêm margin giữa các phần tử  
+                                backgroundColor: "white", // Đổi màu nền cho đẹp hơn  
+                                shadowColor: "#000", // Màu bóng  
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 1,
+                                },
+                                shadowOpacity: 0.2, // Độ mờ của bóng  
+                                shadowRadius: 1.5, // Đường kính bóng  
+                                elevation: 2, // Thêm hiệu ứng bóng cho Android  
                             }}
                         >
-                            <Text>{item.name}</Text>
-                            <Image source={item.source} style={{ height: 50, width: 50 }} />
+                            <Text style={{ fontSize: 18, fontWeight: "600" }}>{item.name}</Text>
+                            <Image source={item.source} style={{ height: 60, width: 60 }} />
                         </View>
                     )}
                     keyExtractor={(item) => item.key.toString()}
@@ -106,10 +114,14 @@ const SearchPage = () => {
                     autoFocus
                     style={{
                         flex: 1,
-                        backgroundColor: "#eee",
-                        paddingVertical: 3,
-                        paddingHorizontal: 10,
-                        borderRadius: 3,
+                        backgroundColor: "#f0f0f0", // Màu nền  
+                        paddingVertical: 8, // Giảm khoảng cách theo chiều dọc  
+                        paddingHorizontal: 10, // Giảm khoảng cách bên trái và bên phải  
+                        borderRadius: 5, // Bo tròn  
+                        fontSize: 16, // Giảm kích thước font chữ  
+                        borderWidth: 1, // Đường viền  
+                        borderColor: "#ccd0d5", // Màu viền  
+                        elevation: 2, // Thêm hiệu ứng bóng đổ 
                     }}
                 />
             </View>

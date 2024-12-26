@@ -79,10 +79,14 @@ const RestaurantsPage = () => {
                     onChangeText={(text: string) => handleSearch(text)}
                     style={{
                         flex: 1,
-                        backgroundColor: "#eee",
-                        paddingVertical: 3,
-                        paddingHorizontal: 10,
-                        borderRadius: 5,
+                        backgroundColor: "#f0f0f0", // Màu nền  
+                        paddingVertical: 8, // Giảm khoảng cách theo chiều dọc  
+                        paddingHorizontal: 10, // Giảm khoảng cách bên trái và bên phải  
+                        borderRadius: 5, // Bo tròn  
+                        fontSize: 16, // Giảm kích thước font chữ  
+                        borderWidth: 1, // Đường viền  
+                        borderColor: "#ccd0d5", // Màu viền  
+                        elevation: 2, // Thêm hiệu ứng bóng đổ 
                     }}
                 />
             </View>
