@@ -136,3 +136,9 @@ export const getRestaurantByNameAPI = (name: string) => {
     const url = `/restaurant?current=1&pageSize=10&name=${name}`;
     return axios.get<IBackendRes<IModelPaginate<IRestaurant>>>(url);
   };
+
+
+  export const filterRestaurantAPI = (query: string) => {
+    const url = `/restaurant?${query}`;
+    return axios.get<IBackendRes<IModelPaginate<IRestaurant>>>(url);
+  };
