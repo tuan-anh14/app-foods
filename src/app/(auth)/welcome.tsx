@@ -67,7 +67,7 @@ const WelcomePage = () => {
                             <ShareButton
                                 title="faceBook"
                                 onPress={() => {
-                                    alert("me");
+                                    router.push("https://www.facebook.com/login");
                                 }}
                                 textStyle={{ textTransform: "uppercase" }}
                                 pressStyle={{ alignSelf: "stretch" }}
@@ -81,7 +81,7 @@ const WelcomePage = () => {
                             <ShareButton
                                 title="google"
                                 onPress={() => {
-                                    alert("me");
+                                    router.push("https://accounts.google.com/signin");
                                 }}
                                 textStyle={{ textTransform: "uppercase" }}
                                 pressStyle={{ alignSelf: "stretch" }}
@@ -93,6 +93,7 @@ const WelcomePage = () => {
                                 }}
                                 icons={<Image source={ggLogo} />}
                             />
+
                         </View>
                         <View>
                             <ShareButton
