@@ -18,24 +18,22 @@ const ChangePassword = () => {
     const { appState } = useCurrentApp();
 
     const handleChangePassword = async (currentPassword: string, newPassword: string) => {
-        if (appState?.user?.id) {
-            const res = await changePasswordAPI();
-            if (res.data) {
-                Toast.show("Đổi mật khẩu thành công!", {
-                    duration: Toast.durations.LONG,
-                    textColor: "white",
-                    backgroundColor: APP_COLOR.ORANGE,
-                    opacity: 1
-                });
-            } else {
-                const message = Array.isArray(res.message) ? res.message[0] : res.message;
-                Toast.show(message, {
-                    duration: Toast.durations.LONG,
-                    textColor: 'white',
-                    backgroundColor: APP_COLOR.ORANGE,
-                    opacity: 1
-                });
-            }
+        const res = await changePasswordAPI(currentPassword, newPassword);
+        if (res.data) {
+            Toast.show("Đổi mật khẩu thành công!", {
+                duration: Toast.durations.LONG,
+                textColor: "white",
+                backgroundColor: APP_COLOR.ORANGE,
+                opacity: 1
+            });
+        } else {
+            const message = Array.isArray(res.message) ? res.message[0] : res.message;
+            Toast.show(message, {
+                duration: Toast.durations.LONG,
+                textColor: 'white',
+                backgroundColor: APP_COLOR.ORANGE,
+                opacity: 1
+            });
         }
     };
 

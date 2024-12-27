@@ -148,7 +148,6 @@ const PlaceOrderPage = () => {
                 )}
             </ScrollView>
 
-            {/* Phần chọn phương thức thanh toán */}
             <View style={{ padding: 10 }}>
                 <Text style={{ fontWeight: "600", marginBottom: 5 }}>Phương thức thanh toán:</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>

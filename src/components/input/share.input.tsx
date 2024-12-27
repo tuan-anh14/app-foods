@@ -72,17 +72,21 @@ const ShareInput = (props: IProps) => {
                         setIsFocus(true);
                     }}
                     onBlur={(e) => {
-                        if (onBlur)
-                            onBlur(e);
+                        if (onBlur) onBlur(e);
                         setIsFocus(false);
                     }}
                     keyboardType={keyboardType}
                     style={[
                         styles.input,
-                        { borderColor: isFocus ? APP_COLOR.ORANGE : APP_COLOR.GREY },
+                        {
+                            borderColor: isFocus ? APP_COLOR.ORANGE : APP_COLOR.GREY,
+                            backgroundColor: !editable ? "#f5f5f5" : "white",
+                            color: !editable ? "grey" : "black",
+                        },
                     ]}
                     secureTextEntry={secureTextEntry && !isShowPassword}
                 />
+
                 {error && touched && <Text style={{ color: "red", marginTop: 5 }}>{error}</Text>}
                 {secureTextEntry && (
                     <FontAwesome5

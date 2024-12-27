@@ -94,6 +94,7 @@ const UserInfo = () => {
                                     title="Email"
                                     keyboardType="email-address"
                                     value={appState?.user.email}
+
                                 />
                                 <ShareInput
                                     title="Số điện thoại"

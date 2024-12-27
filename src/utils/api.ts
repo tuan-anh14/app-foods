@@ -132,9 +132,9 @@ export const getNotificationsAPI = () => {
     return axios.get<IBackendRes<INotification[]>>(url);
 };
 
-export const changePasswordAPI = () => {
+export const changePasswordAPI = (currentPassword: string, newPassword: string) => {
     const url = '/user/change-password';
-    return axios.get<IBackendRes<IUserLogin[]>>(url);
+    return axios.post(url, { currentPassword, newPassword });
 };
 
 export const getRestaurantByNameAPI = (name: string) => {
