@@ -66,7 +66,7 @@ const AppMessage = () => {
                     Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi qua Facebook để có thể hỗ trợ bạn.
                 </Text>
 
-                {/* Nút liên kết đến Facebook */}
+
                 <Pressable style={styles.facebookButton} onPress={openFacebook}>
                     <FontAwesome name="facebook" size={24} color="#ffffff" />
                     <Text style={styles.facebookText}>Liên hệ với chúng tôi trên Facebook</Text>

@@ -50,7 +50,7 @@ const WelcomePage = () => {
                 <View style={styles.container}>
                     <View style={styles.welcomeText}>
                         <Text style={styles.heading}>Welcome To</Text>
-                        <Text style={styles.body}>@Tuan Anh - Food</Text>
+                        <Text style={styles.body}>Tuan Anh - Food</Text>
                         <Text style={styles.footer}>
                             Nền tảng đặt đồ ăn hàng đầu Việt Nam
                         </Text>
