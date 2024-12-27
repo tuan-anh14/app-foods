@@ -104,7 +104,6 @@ const PlaceOrderPage = () => {
             </View>
             <ScrollView style={{ flex: 1, padding: 10 }}>
                 {orderItems?.map((item, index) => {
-                    console.log(item)
                     return (
                         <View key={index}
                             style={{

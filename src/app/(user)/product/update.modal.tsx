@@ -87,30 +87,39 @@ const UpdateModalPage = () => {
         if (restaurant?._id && menuItem) {
             const item = menuItem;
 
-            // Cập nhật tổng và số lượng trong giỏ hàng  
+            // Cập nhật tổng và số lượng trong giỏ hàng
             cart[restaurant._id].sum += total * price;
             cart[restaurant._id].quantity += total;
 
-            const currentQuantity = Math.max(0, cart[restaurant._id].items[item._id]?.quantity + total);
+            const currentQuantity = Math.max(
+                0,
+                (cart[restaurant._id].items[item._id]?.quantity || 0) + total
+            );
 
             const i = cart[restaurant._id].items[item._id];
             let currentExtraQuantity = 0;
 
-            if (i.extra && i.extra[keyOption] !== null) {
-                currentExtraQuantity = Math.max(0, (i.extra[keyOption] || 0) + total);
+            if (i?.extra) {
+                const existingQuantity = i.extra[keyOption] || 0;
+                currentExtraQuantity = Math.max(0, existingQuantity + total);
+
             }
 
             cart[restaurant._id].items[item._id] = {
                 data: menuItem,
                 quantity: currentQuantity,
                 extra: {
-                    ...cart[restaurant._id].items[item._id].extra,
+                    ...i?.extra,
                     [keyOption]: currentExtraQuantity,
                 },
             };
+
+            // Xóa key nếu số lượng bằng 0
             if (currentExtraQuantity <= 0) {
                 delete cart[restaurant._id].items[item._id].extra?.[keyOption];
             }
+
+            // Xóa sản phẩm nếu tổng số lượng bằng 0
             if (currentQuantity <= 0 && updatedItems.length === 1) {
                 delete cart[restaurant._id].items[item._id];
             }
@@ -118,6 +127,7 @@ const UpdateModalPage = () => {
             setCart((prevState: any) => ({ ...prevState, ...cart }));
         }
     };
+
 
     return (
         <Animated.View
@@ -179,7 +189,6 @@ const UpdateModalPage = () => {
                     }}
                 >
                     {updatedItems.length > 0 ? (
-                        console.log(updatedItems),
                         updatedItems.map((item, index) => (
                             <View
                                 key={index}

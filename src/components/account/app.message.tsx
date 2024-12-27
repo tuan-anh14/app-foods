@@ -63,7 +63,7 @@ const AppMessage = () => {
                     Chúng tôi cam kết mang đến cho bạn trải nghiệm đặt món ăn nhanh chóng và tiện lợi nhất.
                 </Text>
                 <Text style={styles.appDescription}>
-                    Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi qua Facebook để có thể hỗ trợ trong ứng dụng.
+                    Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi qua Facebook để có thể hỗ trợ bạn.
                 </Text>
 
                 {/* Nút liên kết đến Facebook */}

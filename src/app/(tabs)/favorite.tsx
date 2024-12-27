@@ -74,7 +74,7 @@ const FavoritePage = () => {
                             </Pressable>
                         ))
                     ) : (
-                        <Text style={styles.noFavoriteText}>Không có món ăn yêu thích nào.</Text>
+                        <Text style={styles.noFavoriteText}>Không có quán ăn yêu thích nào.</Text>
                     )}
                 </ScrollView>
             </View>
