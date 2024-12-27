@@ -15,80 +15,103 @@ interface IOrderItem {
     quantity: number;
 }
 
+const safeFunction = (callback: Function, fallbackValue: any = null) => {
+    try {
+        return callback();
+    } catch (error) {
+        console.error("Error occurred:", error);
+        return fallbackValue;
+    }
+};
+
 const PlaceOrderPage = () => {
     const { restaurant, cart, setCart } = useCurrentApp();
     const [orderItems, setOrderItems] = useState<IOrderItem[]>([]);
     const [paymentMethod, setPaymentMethod] = useState<'cash' | 'paypal'>('cash');
 
     useEffect(() => {
-        if (cart && restaurant && restaurant._id) {
-            const result = [];
-            for (const [menuItemId, currentItems] of Object.entries(cart[restaurant._id].items)) {
-                if (currentItems.extra) {
-                    for (const [key, value] of Object.entries(currentItems.extra)) {
-                        const option = currentItems.data.options?.find(
-                            item => `${item.title}-${item.description}` === key
-                        );
+        safeFunction(() => {
+            if (cart && restaurant && restaurant._id && cart[restaurant._id]?.items) {
+                const result: IOrderItem[] = [];
+                for (const [menuItemId, currentItems] of Object.entries(cart[restaurant._id].items)) {
+                    if (currentItems.extra) {
+                        for (const [key, value] of Object.entries(currentItems.extra)) {
+                            const option = currentItems.data.options?.find(
+                                item => `${item.title}-${item.description}` === key
+                            );
+                            const addPrice = option?.additionalPrice ?? 0;
 
-                        const addPrice = option?.additionalPrice ?? 0;
-
+                            result.push({
+                                image: currentItems.data.image,
+                                title: currentItems.data.title,
+                                option: key,
+                                price: currentItems.data.basePrice + addPrice,
+                                quantity: value
+                            });
+                        }
+                    } else {
                         result.push({
                             image: currentItems.data.image,
                             title: currentItems.data.title,
-                            option: key,
-                            price: currentItems.data.basePrice + addPrice,
-                            quantity: value
+                            option: "",
+                            price: currentItems.data.basePrice,
+                            quantity: currentItems.quantity
                         });
                     }
-                } else {
-                    result.push({
-                        image: currentItems.data.image,
-                        title: currentItems.data.title,
-                        option: "",
-                        price: currentItems.data.basePrice,
-                        quantity: currentItems.quantity
-                    });
                 }
+                setOrderItems(result);
             }
-            setOrderItems(result);
-        }
-    }, [restaurant]);
+        });
+    }, [cart, restaurant]);
+
+    if (!cart || !restaurant || !restaurant._id || !cart[restaurant._id]?.items) {
+        console.warn("Cart hoặc thông tin nhà hàng không hợp lệ.");
+        return;
+    }
+
+
 
     const handlePlaceOrder = async () => {
-        const data = {
-            restaurant: restaurant?._id,
-            totalPrice: cart?.[restaurant!._id].sum,
-            totalQuantity: cart?.[restaurant!._id].quantity,
-            detail: orderItems
-        };
+        try {
+            const data = {
+                restaurant: restaurant?._id,
+                totalPrice: cart?.[restaurant!._id].sum,
+                totalQuantity: cart?.[restaurant!._id].quantity,
+                detail: orderItems
+            };
 
-        const res = await placeOrderAPI(data)
-        if (res.data) {
-            //success
-            Toast.show("Đặt hàng thành công!", {
-                duration: Toast.durations.LONG,
-                textColor: 'white',
-                backgroundColor: APP_COLOR.ORANGE,
-                opacity: 1
-            });
-            //clear data cart
-            if (restaurant) {
-                delete cart[restaurant._id];
-                setCart((prevCart: any) => ({ ...prevCart, ...cart }))
+            const res = await placeOrderAPI(data);
+            if (res.data) {
+                Toast.show("Đặt hàng thành công!", {
+                    duration: Toast.durations.LONG,
+                    textColor: 'white',
+                    backgroundColor: APP_COLOR.ORANGE,
+                    opacity: 1
+                });
+                if (restaurant) {
+                    delete cart[restaurant._id];
+                    setCart((prevCart: any) => ({ ...prevCart, ...cart }));
+                }
+                router.navigate("/");
+            } else {
+                const m = Array.isArray(res.message) ? res.message[0] : res.message;
+                Toast.show(m, {
+                    duration: Toast.durations.LONG,
+                    textColor: 'white',
+                    backgroundColor: APP_COLOR.ORANGE,
+                    opacity: 1
+                });
             }
-            router.navigate("/")
-
-        } else {
-            //error
-            const m = Array.isArray(res.message) ? res.message[0] : res.message;
-            Toast.show(m, {
+        } catch (error) {
+            console.error("Error placing order:", error);
+            Toast.show("Đã xảy ra lỗi khi đặt hàng. Vui lòng thử lại!", {
                 duration: Toast.durations.LONG,
                 textColor: 'white',
-                backgroundColor: APP_COLOR.ORANGE,
+                backgroundColor: "red",
                 opacity: 1
             });
         }
-    }
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -103,34 +126,32 @@ const PlaceOrderPage = () => {
                 <Text style={{ fontWeight: "600" }}>{restaurant?.name}</Text>
             </View>
             <ScrollView style={{ flex: 1, padding: 10 }}>
-                {orderItems?.map((item, index) => {
-                    return (
-                        <View key={index}
-                            style={{
-                                gap: 10,
-                                flexDirection: "row",
-                                borderBottomColor: "#eee",
-                                borderBottomWidth: 1,
-                                paddingVertical: 10
-                            }}>
-                            <Image
-                                style={{ height: 50, width: 50 }}
-                                source={{ uri: `${getURLBaseBackend()}/images/menu-item/${item.image}` }}
-                            />
-                            <View>
-                                <Text style={{ fontWeight: "600" }}>
-                                    {item.quantity} x
-                                </Text>
-                            </View>
-                            <View style={{ gap: 10 }}>
-                                <Text>{item.title}</Text>
-                                <Text style={{ fontSize: 12, color: APP_COLOR.GREY }}>
-                                    {item.option}
-                                </Text>
-                            </View>
+                {safeFunction(() => orderItems.map((item, index) => (
+                    <View key={index}
+                        style={{
+                            gap: 10,
+                            flexDirection: "row",
+                            borderBottomColor: "#eee",
+                            borderBottomWidth: 1,
+                            paddingVertical: 10
+                        }}>
+                        <Image
+                            style={{ height: 50, width: 50 }}
+                            source={{ uri: `${getURLBaseBackend()}/images/menu-item/${item.image}` }}
+                        />
+                        <View>
+                            <Text style={{ fontWeight: "600" }}>
+                                {item.quantity} x
+                            </Text>
                         </View>
-                    );
-                })}
+                        <View style={{ gap: 10 }}>
+                            <Text>{item.title}</Text>
+                            <Text style={{ fontSize: 12, color: APP_COLOR.GREY }}>
+                                {item.option}
+                            </Text>
+                        </View>
+                    </View>
+                )), [])}
                 {orderItems?.length > 0 && (
                     <View style={{ marginVertical: 15 }}>
                         <View style={{
@@ -147,7 +168,6 @@ const PlaceOrderPage = () => {
                     </View>
                 )}
             </ScrollView>
-
             <View style={{ padding: 10 }}>
                 <Text style={{ fontWeight: "600", marginBottom: 5 }}>Phương thức thanh toán:</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
@@ -178,7 +198,6 @@ const PlaceOrderPage = () => {
                     </Pressable>
                 </View>
             </View>
-
             <View style={{
                 gap: 20,
                 marginBottom: 15,
@@ -197,8 +216,7 @@ const PlaceOrderPage = () => {
                         color: "white",
                         textAlign: "center"
                     }}>
-                        Đặt đơn - {``}
-                        {currencyFormatter(cart && restaurant && cart?.[restaurant._id] && cart?.[restaurant._id].sum)}
+                        Đặt đơn - {currencyFormatter(cart && restaurant && cart?.[restaurant._id] && cart?.[restaurant._id].sum)}
                     </Text>
                 </Pressable>
             </View>
