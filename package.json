@@ -4,8 +4,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "private": true,
@@ -43,7 +43,9 @@
     "react-native-web": "~0.19.13",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
-    "yup": "1.6.1"
+    "yup": "1.6.1",
+    "expo-dev-client": "~5.0.7",
+    "expo-system-ui": "~4.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
