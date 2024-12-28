@@ -6,9 +6,11 @@ import { APP_COLOR } from "@/utils/constant";
 import { SignUpSchema } from "@/utils/validate.schema";
 import { Link, router } from "expo-router";
 import { Formik } from "formik";
+import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Toast from "react-native-root-toast";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -30,40 +32,41 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
 const SignUpPage = () => {
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSignUp = async (email: string, password: string, name: string) => {
-
     try {
-
-      const res = await registerAPI(email, password, name)
+      setLoading(true);
+      const res = await registerAPI(email, password, name);
+      setLoading(false);
       if (res.data) {
         router.replace({
           pathname: "/(auth)/verify",
-          params: { email: email }
-
-        }
-        )
+          params: { email: email },
+        });
       } else {
         const m = Array.isArray(res.message) ? res.message[0] : res.message;
         Toast.show(m, {
           duration: Toast.durations.LONG,
-          textColor: 'white',
+          textColor: "white",
           backgroundColor: APP_COLOR.ORANGE,
-          opacity: 1
+          opacity: 1,
         });
       }
     } catch (error) {
-      console.log(">>check error:", error)
+      setLoading(false);
+      console.log(">>check error:", error);
     }
-  }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Formik
         validationSchema={SignUpSchema}
         initialValues={{ email: "", password: "", name: "" }}
-        onSubmit={values => handleSignUp(values.email, values.password, values.name)}
+        onSubmit={(values) => handleSignUp(values.email, values.password, values.name)}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <View style={styles.container}>
@@ -78,17 +81,19 @@ const SignUpPage = () => {
                 Đăng ký tài khoản
               </Text>
             </View>
-            <ShareInput title="Họ tên"
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
+            <ShareInput
+              title="Họ tên"
+              onChangeText={handleChange("name")}
+              onBlur={handleBlur("name")}
               value={values.name}
               error={errors.name}
-              touched={touched.name} />
+              touched={touched.name}
+            />
             <ShareInput
               title="Email"
               keyboardType="email-address"
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
               value={values.email}
               error={errors.email}
               touched={touched.email}
@@ -96,14 +101,15 @@ const SignUpPage = () => {
             <ShareInput
               title="Password"
               secureTextEntry={true}
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
+              onChangeText={handleChange("password")}
+              onBlur={handleBlur("password")}
               value={values.password}
               error={errors.password}
               touched={touched.password}
             />
             <View style={{ marginVertical: 10 }}></View>
             <ShareButton
+              loading={loading}
               title="Đăng Ký"
               onPress={handleSubmit as any}
               textStyle={{
@@ -140,13 +146,12 @@ const SignUpPage = () => {
                 </Text>
               </Link>
             </View>
-            <SocialButton
-              title="Đăng ký với"
-            />
+            <SocialButton title="Đăng ký với" />
           </View>
         )}
       </Formik>
     </SafeAreaView>
   );
 };
+
 export default SignUpPage;
