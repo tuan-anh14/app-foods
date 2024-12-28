@@ -126,7 +126,6 @@ const CreateModalPage = () => {
                     backgroundColor: "white",
                 }}
             >
-                {/* Header */}
                 <View
                     style={{
                         borderBottomColor: "#eee",
@@ -151,7 +150,6 @@ const CreateModalPage = () => {
                     <AntDesign onPress={() => router.back()} name="close" size={24} color="grey" />
                 </View>
 
-                {/* Item Single */}
                 <View
                     style={{
                         borderBottomColor: "#eee",
@@ -168,7 +166,6 @@ const CreateModalPage = () => {
                     )}
                 </View>
 
-                {/* Options */}
                 <View
                     style={{
                         backgroundColor: "#eee",
@@ -230,7 +227,6 @@ const CreateModalPage = () => {
                     ))}
                 </ScrollView>
 
-                {/* Add to Cart Button */}
                 <View
                     style={{
                         marginBottom: 20,

@@ -151,7 +151,6 @@ const UpdateModalPage = () => {
                     overflow: 'hidden',
                 }}
             >
-                {/* Header */}
                 <View
                     style={{
                         borderBottomColor: '#eee',
@@ -180,7 +179,6 @@ const UpdateModalPage = () => {
                     />
                 </View>
 
-                {/* Content */}
                 <ScrollView
                     style={{
                         flex: 1,
@@ -202,7 +200,6 @@ const UpdateModalPage = () => {
                                     borderBottomWidth: 1,
                                 }}
                             >
-                                {/* Product Image */}
                                 <Image
                                     source={{ uri: `${getURLBaseBackend()}/images/menu-item/${item.image}` }}
                                     style={{
@@ -212,7 +209,6 @@ const UpdateModalPage = () => {
                                         marginRight: 10,
                                     }}
                                 />
-                                {/* Product Info */}
                                 <View style={{ flex: 1 }}>
                                     <Text style={{ fontWeight: 'bold' }}>{item?.title}</Text>
                                     <Text style={{ color: 'gray' }}>{item?.option}</Text>
@@ -233,7 +229,6 @@ const UpdateModalPage = () => {
                                                 gap: 5,
                                             }}
                                         >
-                                            {/* Minus Button */}
                                             <Pressable
                                                 onPress={() => handlePressItem(item, 'MINUS')}
                                                 style={({ pressed }) => ({
@@ -247,12 +242,9 @@ const UpdateModalPage = () => {
                                                 />
                                             </Pressable>
 
-                                            {/* Quantity */}
                                             <Text style={{ fontSize: 16 }}>
                                                 {item?.quantity || 0}
                                             </Text>
-
-                                            {/* Plus Button */}
                                             <Pressable
                                                 onPress={() => handlePressItem(item, 'PLUS')}
                                                 style={({ pressed }) => ({

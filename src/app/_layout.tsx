@@ -39,7 +39,6 @@ const RootLayout = () => {
   return (
     <RootSiblingParent>
       <AppProvider>
-        {/* <SafeAreaView style={{ flex: 1 }}> */}
         <ThemeProvider value={navTheme}>
           <Stack
             screenOptions={{
@@ -114,7 +113,6 @@ const RootLayout = () => {
               options={{ headerTitle: "Thông tin ứng dụng", headerBackTitle: "Back" }} />
           </Stack>
         </ThemeProvider>
-        {/* </SafeAreaView> */}
       </AppProvider>
     </RootSiblingParent>
   )

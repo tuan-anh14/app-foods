@@ -29,7 +29,7 @@ const StickyFooter = (props: IProps) => {
             {getSum() === 0 ? <></> :
 
                 <View style={styles.container}>
-                    {/* Cart Section */}
+
                     <View style={styles.cartSection}>
                         <Pressable style={styles.cartIconContainer} onPress={() => alert("cart")}>
                             <FontAwesome5 name="shopping-basket" size={26} color={APP_COLOR.ORANGE} />
@@ -48,7 +48,7 @@ const StickyFooter = (props: IProps) => {
                         </View>
                     </View>
 
-                    {/* Delivery Button */}
+
                     <Pressable style={styles.deliveryButton} onPress={() => router.navigate("/product/place.order")}>
                         <Text style={styles.deliveryButtonText}>Giao hàng</Text>
                     </Pressable>

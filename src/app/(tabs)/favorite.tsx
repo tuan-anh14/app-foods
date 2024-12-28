@@ -34,13 +34,13 @@ const FavoritePage = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                {/* Header */}
+
                 <View style={styles.header}>
                     <MaterialIcons name="favorite" size={24} color={APP_COLOR.ORANGE} />
                     <Text style={styles.headerText}>Danh sách quán ăn yêu thích</Text>
                 </View>
 
-                {/* List of Favorite Restaurants */}
+
                 <ScrollView
                     style={{ flex: 1 }}
                     refreshControl={
@@ -61,13 +61,12 @@ const FavoritePage = () => {
                                 })}
                                 style={styles.restaurantItem}
                             >
-                                {/* Hiển thị hình ảnh của nhà hàng */}
+
                                 <Image
                                     source={{ uri: `${getURLBaseBackend()}/images/restaurant/${item.restaurant.image}` }}
                                     style={styles.restaurantImage}
                                 />
                                 <View style={styles.restaurantDetails}>
-                                    {/* Truy cập các thuộc tính trong restaurant */}
                                     <Text style={styles.restaurantName}>{item.restaurant.name}</Text>
                                     <Text style={styles.restaurantAddress}>{item.restaurant.address}</Text>
                                 </View>

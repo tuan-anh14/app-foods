@@ -18,13 +18,11 @@ const OrderPage = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                {/* Header */}
                 <View style={styles.header}>
                     <MaterialIcons name="history" size={24} color={APP_COLOR.ORANGE} />
                     <Text style={styles.headerText}>Lịch sử đơn hàng</Text>
                 </View>
 
-                {/* List of Orders */}
                 <ScrollView
                     style={{ flex: 1 }}
                     contentContainerStyle={styles.orderList}
@@ -34,13 +32,11 @@ const OrderPage = () => {
                             key={index}
                             style={styles.orderItem}
                         >
-                            {/* Hiển thị hình ảnh của nhà hàng */}
                             <Image
                                 source={{ uri: `${getURLBaseBackend()}/images/restaurant/${item.restaurant.image}` }}
                                 style={styles.restaurantImage}
                             />
                             <View style={styles.orderDetails}>
-                                {/* Thông tin nhà hàng và đơn hàng */}
                                 <Text style={styles.restaurantName}>{item.restaurant.name}</Text>
                                 <Text style={styles.restaurantAddress}>{item.restaurant.address}</Text>
                                 <Text style={styles.orderPrice}>Tổng tiền: {currencyFormatter(item.totalPrice)}</Text>

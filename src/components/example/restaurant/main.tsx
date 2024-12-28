@@ -153,7 +153,7 @@ const RMain = () => {
                 animatedHeartIconStyle={animatedHeartIconStyle}
             />
 
-            {/*  Image */}
+
             <View style={styles.header}>
                 <Image
                     source={{ uri: `${getURLBaseBackend()}/images/restaurant/${restaurant?.image}` }}
@@ -161,7 +161,7 @@ const RMain = () => {
                 />
             </View>
 
-            {/* Info */}
+
             <Animated.View style={[animatedInfoStyle]}>
                 <Info
                     infoHeight={INFO_HEIGHT}
@@ -169,7 +169,7 @@ const RMain = () => {
                 />
             </Animated.View>
 
-            {/* Sticky Menu */}
+
             <Animated.FlatList
                 ref={flatListRef}
                 horizontal
@@ -204,7 +204,6 @@ const RMain = () => {
                 style={[animatedMenuStyle]}
             />
 
-            {/* Scrollable Content */}
             <AnimatedSectionList
                 ref={sectionListRef as any}
                 style={{ zIndex: 1 }}

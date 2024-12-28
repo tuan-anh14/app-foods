@@ -105,7 +105,7 @@ const StickyHeader = (props: IProps) => {
                 </Animated.View>
             </View>
 
-            {/* background */}
+
             <Animated.View style={[{
                 position: 'absolute',
                 top: 0,
@@ -116,7 +116,7 @@ const StickyHeader = (props: IProps) => {
                 backgroundColor: 'white',
             }, animatedStickyHeaderStyle]} />
 
-            {/* like/dislike a restaurant */}
+
             <Animated.View style={[{
                 position: 'absolute',
                 top: imageHeight + 80,

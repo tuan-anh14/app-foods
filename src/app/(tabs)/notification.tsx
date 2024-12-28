@@ -18,13 +18,10 @@ const NotificationPage = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                {/* Header */}
                 <View style={styles.header}>
                     <MaterialIcons name="notifications" size={24} color={APP_COLOR.ORANGE} />
                     <Text style={styles.headerText}>Thông báo</Text>
                 </View>
-
-                {/* List of Notifications */}
                 <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.notificationList}>
                     {notifications.map((notification, index) => (
                         <View key={index} style={styles.notificationItem}>
