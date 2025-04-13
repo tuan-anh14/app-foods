@@ -98,7 +98,7 @@ const AccountPage = () => {
                 >
                     <Text style={styles.logoutText}>Đăng Xuất</Text>
                 </Pressable>
-                <Text style={styles.versionText}>Version 1.0 - @tuananh</Text>
+                <Text style={styles.versionText}>@tuananh</Text>
             </View>
         </View>
     );
