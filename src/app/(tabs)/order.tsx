@@ -7,13 +7,38 @@ import { MaterialIcons } from '@expo/vector-icons'; // Thêm thư viện icon
 const OrderPage = () => {
     const [orderHistory, setOrderHistory] = useState<IOrderHistory[]>([]);
 
+
+
+    //Trước cải tiến
     useEffect(() => {
         const fetchOrderHistory = async () => {
+            const start = Date.now(); // bắt đầu đo thời gian
+
+
             const res = await getOrderHistoryAPI();
-            if (res.data) setOrderHistory(res.data);
+
+
+            const end = Date.now(); // kết thúc đo thời gian
+
+
+            console.log("⏱ Thời gian tải dữ liệu đơn hàng (frontend):", end - start, "ms");
+
+
+            if (res.data) {
+                setOrderHistory(res.data);
+            }
+
+
+            // Optional: nếu bạn có backend trả về `duration`, log cả 2 để so sánh
+            if (res.duration) {
+                console.log("⏱ Thời gian xử lý ở backend:", res.duration);
+            }
         };
+
+
         fetchOrderHistory();
     }, []);
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

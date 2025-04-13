@@ -102,10 +102,12 @@ export const placeOrderAPI = (data: any) => {
     return axios.post<IBackendRes<IUserLogin>>(url, { ...data });
   };
 
-  export const getOrderHistoryAPI = () => {
+
+//Trước cải tiến
+export const getOrderHistoryAPI = () => {
     const url = '/order';
     return axios.get<IBackendRes<IOrderHistory[]>>(url);
-  };
+};
 
   export const updateUserAPI = (_id: string, name: string, phone: string) => {
     const url = '/user';
