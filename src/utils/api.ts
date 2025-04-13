@@ -104,10 +104,17 @@ export const placeOrderAPI = (data: any) => {
 
 
 //Trước cải tiến
-export const getOrderHistoryAPI = () => {
-    const url = '/order';
+// export const getOrderHistoryAPI = () => {
+//     const url = '/order';
+//     return axios.get<IBackendRes<IOrderHistory[]>>(url);
+// };
+
+//Sau cải tiến
+export const getOrderHistoryAPI = (page: number = 1, limit: number = 10) => {
+    const url = `/order?page=${page}&limit=${limit}`;
     return axios.get<IBackendRes<IOrderHistory[]>>(url);
-};
+  };
+
 
   export const updateUserAPI = (_id: string, name: string, phone: string) => {
     const url = '/user';
